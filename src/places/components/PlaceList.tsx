@@ -1,11 +1,33 @@
 import React from 'react';
 
-import './PlaceItem.css';
+import Card from '../../shared/components/UIElements/Card';
+import PlaceItem from './PlaceItem';
 
-interface Props {}
+import './PlaceList.css';
 
-const PlaceList = (props: Props) => {
-    return <div></div>;
+interface Props {
+    places: Place[];
+}
+
+const PlaceList = ({ places }: Props) => {
+    if (places.length === 0) {
+        return (
+            <Card>
+                <div className="place-list center">
+                    <h2>No places found. Maybe create one?</h2>
+                    <button>Share Place</button>
+                </div>
+            </Card>
+        );
+    }
+
+    return (
+        <ul className="place-list">
+            {places.map((p) => (
+                <PlaceItem key={p.id} place={p} />
+            ))}
+        </ul>
+    );
 };
 
 export default PlaceList;
