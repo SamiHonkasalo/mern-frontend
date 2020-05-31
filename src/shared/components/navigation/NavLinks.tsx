@@ -8,10 +8,18 @@ interface Props {}
 const NavLinks = (props: Props) => {
     return (
         <ul className="nav-links">
-            <NavLink to="/">ALL USERS</NavLink>
-            <NavLink to="/u1/places">MY PLACES</NavLink>
-            <NavLink to="/places/new">ADD PLACE</NavLink>
-            <NavLink to="/auth">AUTHENTICATE</NavLink>
+            <NavLink to="/" exact>
+                ALL USERS
+            </NavLink>
+            <NavLink to="/u1/places" exact>
+                MY PLACES
+            </NavLink>
+            <NavLink to="/places/new" exact>
+                ADD PLACE
+            </NavLink>
+            <NavLink to="/auth" exact>
+                AUTHENTICATE
+            </NavLink>
         </ul>
     );
 };
