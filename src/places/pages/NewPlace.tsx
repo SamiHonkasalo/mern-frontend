@@ -2,7 +2,7 @@ import React from 'react';
 
 interface Props {}
 
-const NewPlace = ({}: Props) => {
+const NewPlace: React.FC<Props> = ({}: Props) => {
     return <div>New Place!</div>;
 };
 

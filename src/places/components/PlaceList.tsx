@@ -9,7 +9,7 @@ interface Props {
     places: Place[];
 }
 
-const PlaceList = ({ places }: Props) => {
+const PlaceList: React.FC<Props> = ({ places }: Props) => {
     if (places.length === 0) {
         return (
             <Card>

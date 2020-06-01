@@ -7,7 +7,7 @@ interface Props {
     onClick: () => void;
 }
 
-const Backdrop = (props: Props) => {
+const Backdrop: React.FC<Props> = (props: Props) => {
     return ReactDOM.createPortal(
         <div className="backdrop" onClick={props.onClick}></div>,
         document.getElementById('backdrop-hook')!,

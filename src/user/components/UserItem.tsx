@@ -8,7 +8,7 @@ interface Props {
     user: User;
 }
 
-const UserItem = ({ user }: Props) => {
+const UserItem: React.FC<Props> = ({ user }: Props) => {
     return (
         <li className="user-item">
             <Card className="user-item__content">

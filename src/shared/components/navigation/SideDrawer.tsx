@@ -10,7 +10,7 @@ interface Props {
     onClick: () => void;
 }
 
-const SideDrawer = (props: Props) => {
+const SideDrawer: React.FC<Props> = (props: Props) => {
     const nodeRef = useRef(null);
     const content = (
         <CSSTransition

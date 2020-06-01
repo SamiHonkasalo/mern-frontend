@@ -6,7 +6,7 @@ interface Props {
     children?: React.ReactNode;
 }
 
-const MainHeader = (props: Props) => {
+const MainHeader: React.FC<Props> = (props: Props) => {
     return <header className="main-header">{props.children}</header>;
 };
 

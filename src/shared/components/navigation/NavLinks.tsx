@@ -5,7 +5,7 @@ import './NavLinks.css';
 
 interface Props {}
 
-const NavLinks = (props: Props) => {
+const NavLinks: React.FC<Props> = (props: Props) => {
     return (
         <ul className="nav-links">
             <NavLink to="/" exact>

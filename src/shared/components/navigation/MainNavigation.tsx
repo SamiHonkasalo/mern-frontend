@@ -9,7 +9,7 @@ import Backdrop from '../UIElements/Backdrop';
 
 interface Props {}
 
-const MainNavigation = (props: Props) => {
+const MainNavigation: React.FC<Props> = (props: Props) => {
     const [drawerIsOpen, setDrawerIsOpen] = useState(false);
 
     const handleDrawerOpen = () => {

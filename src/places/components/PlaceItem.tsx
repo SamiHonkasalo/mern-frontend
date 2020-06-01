@@ -2,12 +2,13 @@ import React from 'react';
 
 import Card from '../../shared/components/UIElements/Card';
 import './PlaceItem.css';
+import Button from '../../shared/components/FormElements/Button/Button';
 
 interface Props {
     place: Place;
 }
 
-const PlaceItem = ({ place }: Props) => {
+const PlaceItem: React.FC<Props> = ({ place }: Props) => {
     return (
         <li className="place-item">
             <Card className="place-item__content">
@@ -20,8 +21,9 @@ const PlaceItem = ({ place }: Props) => {
                     <p>{place.description}</p>
                 </div>
                 <div className="place-item__actions">
-                    <button>VIEW ON MAP</button>
-                    <button>EDIT</button>
+                    <Button inverse>VIEW ON MAP</Button>
+                    <Button to={`/places/${place.id}`}>EDIT</Button>
+                    <Button danger>DELETE</Button>
                 </div>
             </Card>
         </li>

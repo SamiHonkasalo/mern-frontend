@@ -32,7 +32,7 @@ const DUMMY_PLACES: Place[] = [
     },
 ];
 
-const UserPlaces = (props: Props) => {
+const UserPlaces: React.FC<Props> = (props: Props) => {
     const userId = useParams<ParamTypes>().userId;
     const filteredPlaces = DUMMY_PLACES.filter((p) => p.creatorId === userId);
 

@@ -7,7 +7,7 @@ interface Props {
     users: User[];
 }
 
-const UsersList = ({ users }: Props) => {
+const UsersList: React.FC<Props> = ({ users }: Props) => {
     if (users.length === 0) {
         return (
             <div className="center">
