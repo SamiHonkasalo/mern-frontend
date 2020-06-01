@@ -4,6 +4,7 @@ import Card from '../../shared/components/UIElements/Card';
 import './PlaceItem.css';
 import Button from '../../shared/components/FormElements/Button/Button';
 import Modal from '../../shared/components/UIElements/Modal';
+import Map from '../../shared/components/UIElements/Map';
 
 interface Props {
     place: Place;
@@ -18,7 +19,7 @@ const PlaceItem: React.FC<Props> = ({ place }: Props) => {
     const closeButton = <Button onClick={handleCloseMap}>CLOSE</Button>;
     const modalContent = (
         <div className="map-container">
-            <h2>MAP</h2>
+            <Map center={place.location} zoom={16} />
         </div>
     );
 
