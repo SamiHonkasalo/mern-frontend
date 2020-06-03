@@ -7,56 +7,56 @@ import Modal from '../../shared/components/UIElements/Modal';
 import Map from '../../shared/components/UIElements/Map';
 
 interface Props {
-    place: Place;
+  place: Place;
 }
 
 const PlaceItem: React.FC<Props> = ({ place }: Props) => {
-    const [showMap, setShowMap] = useState(false);
+  const [showMap, setShowMap] = useState(false);
 
-    const handleOpenMap = () => setShowMap(true);
-    const handleCloseMap = () => setShowMap(false);
+  const handleOpenMap = () => setShowMap(true);
+  const handleCloseMap = () => setShowMap(false);
 
-    const closeButton = <Button onClick={handleCloseMap}>CLOSE</Button>;
-    const modalContent = (
-        <div className="map-container">
-            <Map center={place.location} zoom={16} />
-        </div>
-    );
+  const closeButton = <Button onClick={handleCloseMap}>CLOSE</Button>;
+  const modalContent = (
+    <div className="map-container">
+      <Map center={place.location} zoom={16} />
+    </div>
+  );
 
-    return (
-        <React.Fragment>
-            <Modal
-                show={showMap}
-                onCancel={handleCloseMap}
-                overlayProps={{
-                    header: place.address,
-                    contentClass: 'place-item__modal-content',
-                    footerClass: 'place-item__modal-actions',
-                    footer: closeButton,
-                    children: modalContent,
-                }}
-            />
-            <li className="place-item">
-                <Card className="place-item__content">
-                    <div className="place-item__image">
-                        <img src={place.image} alt={place.title} />
-                    </div>
-                    <div className="place-item__info">
-                        <h2>{place.title}</h2>
-                        <h3>{place.address}</h3>
-                        <p>{place.description}</p>
-                    </div>
-                    <div className="place-item__actions">
-                        <Button inverse onClick={handleOpenMap}>
-                            VIEW ON MAP
-                        </Button>
-                        <Button to={`/places/${place.id}`}>EDIT</Button>
-                        <Button danger>DELETE</Button>
-                    </div>
-                </Card>
-            </li>
-        </React.Fragment>
-    );
+  return (
+    <>
+      <Modal
+        show={showMap}
+        onCancel={handleCloseMap}
+        overlayProps={{
+          header: place.address,
+          contentClass: 'place-item__modal-content',
+          footerClass: 'place-item__modal-actions',
+          footer: closeButton,
+          children: modalContent,
+        }}
+      />
+      <li className="place-item">
+        <Card className="place-item__content">
+          <div className="place-item__image">
+            <img src={place.image} alt={place.title} />
+          </div>
+          <div className="place-item__info">
+            <h2>{place.title}</h2>
+            <h3>{place.address}</h3>
+            <p>{place.description}</p>
+          </div>
+          <div className="place-item__actions">
+            <Button inverse onClick={handleOpenMap}>
+              VIEW ON MAP
+            </Button>
+            <Button to={`/places/${place.id}`}>EDIT</Button>
+            <Button danger>DELETE</Button>
+          </div>
+        </Card>
+      </li>
+    </>
+  );
 };
 
 export default PlaceItem;

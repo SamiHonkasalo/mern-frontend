@@ -4,56 +4,68 @@ import { NavLink } from 'react-router-dom';
 import './Button.css';
 
 interface Props {
-    href?: string;
-    to?: string;
-    children: React.ReactNode;
-    inverse?: boolean;
-    danger?: boolean;
-    exact?: boolean;
-    size?: string;
-    type?: React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>['type'];
-    disabled?: boolean;
-    onClick?: () => void;
+  href?: string;
+  to?: string;
+  children: React.ReactNode;
+  inverse?: boolean;
+  danger?: boolean;
+  isExact?: boolean;
+  size?: string;
+  buttonType?: 'submit' | 'button';
+  disabled?: boolean;
+  onClick?: () => void;
 }
 
-const Button: React.FC<Props> = (props: Props) => {
-    if (props.href) {
-        return (
-            <a
-                className={`button button--${props.size || 'default'} ${props.inverse && 'button--inverse'} ${
-                    props.danger && 'button--danger'
-                }`}
-                href={props.href}
-            >
-                {props.children}
-            </a>
-        );
-    }
-    if (props.to) {
-        return (
-            <NavLink
-                to={props.to}
-                exact
-                className={`button button--${props.size || 'default'} ${props.inverse && 'button--inverse'} ${
-                    props.danger && 'button--danger'
-                }`}
-            >
-                {props.children}
-            </NavLink>
-        );
-    }
+const Button: React.FC<Props> = ({
+  href,
+  to,
+  children,
+  inverse,
+  danger,
+  isExact,
+  size,
+  buttonType,
+  onClick,
+  disabled,
+}: Props) => {
+  if (href) {
     return (
-        <button
-            className={`button button--${props.size || 'default'} ${props.inverse && 'button--inverse'} ${
-                props.danger && 'button--danger'
-            }`}
-            type={props.type}
-            onClick={props.onClick}
-            disabled={props.disabled}
-        >
-            {props.children}
-        </button>
+      <a
+        className={`button button--${size || 'default'} ${
+          inverse && 'button--inverse'
+        } ${danger && 'button--danger'}`}
+        href={href}
+      >
+        {children}
+      </a>
     );
+  }
+  if (to) {
+    return (
+      <NavLink
+        to={to}
+        exact={isExact}
+        className={`button button--${size || 'default'} ${
+          inverse && 'button--inverse'
+        } ${danger && 'button--danger'}`}
+      >
+        {children}
+      </NavLink>
+    );
+  }
+  return (
+    // eslint-disable-next-line react/button-has-type
+    <button
+      className={`button button--${size || 'default'} ${
+        inverse && 'button--inverse'
+      } ${danger && 'button--danger'}`}
+      onClick={onClick}
+      disabled={disabled}
+      type={buttonType}
+    >
+      {children}
+    </button>
+  );
 };
 
 export default Button;

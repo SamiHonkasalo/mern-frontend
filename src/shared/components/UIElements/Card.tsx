@@ -3,17 +3,17 @@ import React from 'react';
 import './Card.css';
 
 interface Props {
-    className?: string;
-    style?: {};
-    children?: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
+  children?: React.ReactNode;
 }
 
-const Card: React.FC<Props> = (props: Props) => {
-    return (
-        <div className={`card ${props.className}`} style={props.style}>
-            {props.children}
-        </div>
-    );
+const Card: React.FC<Props> = ({ className, style, children }: Props) => {
+  return (
+    <div className={`card ${className}`} style={style}>
+      {children}
+    </div>
+  );
 };
 
 export default Card;

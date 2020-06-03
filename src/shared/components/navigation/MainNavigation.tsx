@@ -7,42 +7,44 @@ import SideDrawer from './SideDrawer';
 import './MainNavigation.css';
 import Backdrop from '../UIElements/Backdrop';
 
-interface Props {}
+const MainNavigation: React.FC = () => {
+  const [drawerIsOpen, setDrawerIsOpen] = useState(false);
 
-const MainNavigation: React.FC<Props> = (props: Props) => {
-    const [drawerIsOpen, setDrawerIsOpen] = useState(false);
+  const handleDrawerOpen = () => {
+    setDrawerIsOpen(true);
+  };
 
-    const handleDrawerOpen = () => {
-        setDrawerIsOpen(true);
-    };
+  const handleDrawerClose = () => {
+    setDrawerIsOpen(false);
+  };
 
-    const handleDrawerClose = () => {
-        setDrawerIsOpen(false);
-    };
-
-    return (
-        <React.Fragment>
-            {drawerIsOpen && <Backdrop onClick={handleDrawerClose} />}
-            <SideDrawer show={drawerIsOpen} onClick={handleDrawerClose}>
-                <nav className="main-navigation__drawer-nav">
-                    <NavLinks />
-                </nav>
-            </SideDrawer>
-            <MainHeader>
-                <button className="main-navigation__menu-btn" onClick={handleDrawerOpen}>
-                    <span />
-                    <span />
-                    <span />
-                </button>
-                <h1 className="main-navigation__title">
-                    <Link to="/">YourPlaces</Link>
-                </h1>
-                <nav className="main-navigation__header-nav">
-                    <NavLinks />
-                </nav>
-            </MainHeader>
-        </React.Fragment>
-    );
+  return (
+    <>
+      {drawerIsOpen && <Backdrop onClick={handleDrawerClose} />}
+      <SideDrawer show={drawerIsOpen} onClick={handleDrawerClose}>
+        <nav className="main-navigation__drawer-nav">
+          <NavLinks />
+        </nav>
+      </SideDrawer>
+      <MainHeader>
+        <button
+          className="main-navigation__menu-btn"
+          onClick={handleDrawerOpen}
+          type="button"
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+        <h1 className="main-navigation__title">
+          <Link to="/">YourPlaces</Link>
+        </h1>
+        <nav className="main-navigation__header-nav">
+          <NavLinks />
+        </nav>
+      </MainHeader>
+    </>
+  );
 };
 
 export default MainNavigation;
