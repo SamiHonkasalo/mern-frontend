@@ -2,6 +2,7 @@ import React from 'react';
 
 import Card from '../../shared/components/UIElements/Card';
 import PlaceItem from './PlaceItem';
+import Button from '../../shared/components/FormElements/Button';
 
 import './PlaceList.css';
 
@@ -12,12 +13,12 @@ interface Props {
 const PlaceList: React.FC<Props> = ({ places }: Props) => {
   if (places.length === 0) {
     return (
-      <Card>
-        <div className="place-list center">
+      <div className="place-list center">
+        <Card>
           <h2>No places found. Maybe create one?</h2>
-          <button type="button">Share Place</button>
-        </div>
-      </Card>
+          <Button to="/places/new">Share place</Button>
+        </Card>
+      </div>
     );
   }
 

@@ -1,65 +1,17 @@
-import React, { useCallback, useReducer } from 'react';
+import React from 'react';
 
-import './NewPlace.css';
+import './PlaceForm.css';
 import Input from '../../shared/components/FormElements/Input';
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
 } from '../../shared/util/validators';
 import Button from '../../shared/components/FormElements/Button';
-
-const INPUT_CHANGE = 'INPUT_CHANGE';
-
-interface InputStatus {
-  value: string;
-  isValid: boolean;
-}
-
-interface FormState {
-  inputs: {
-    [key: string]: InputStatus;
-  };
-  isValid: boolean;
-}
-
-interface ChangeAction {
-  type: typeof INPUT_CHANGE;
-  isValid: boolean;
-  inputId: string;
-  value: string;
-}
-
-type FormActions = ChangeAction;
-
-const formReducer = (state: FormState, action: FormActions): FormState => {
-  switch (action.type) {
-    case INPUT_CHANGE: {
-      let formIsValid = true;
-      Object.keys(state.inputs).forEach((inputId) => {
-        if (inputId === action.inputId) {
-          formIsValid = formIsValid && action.isValid;
-        } else {
-          formIsValid = formIsValid && state.inputs[inputId].isValid;
-        }
-      });
-
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          [action.inputId]: { value: action.value, isValid: action.isValid },
-        },
-        isValid: formIsValid,
-      };
-    }
-    default:
-      return state;
-  }
-};
+import useForm from '../../shared/hooks/useForm';
 
 const NewPlace: React.FC = () => {
-  const initialState = {
-    inputs: {
+  const [formState, handleInputChange] = useForm(
+    {
       title: {
         value: '',
         isValid: false,
@@ -73,15 +25,7 @@ const NewPlace: React.FC = () => {
         isValid: false,
       },
     },
-    isValid: false,
-  };
-  const [formState, dispatch] = useReducer(formReducer, initialState);
-
-  const handleInputChange = useCallback(
-    (id: string, value: string, isValid: boolean) => {
-      dispatch({ type: INPUT_CHANGE, isValid, inputId: id, value });
-    },
-    []
+    false
   );
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -112,7 +56,7 @@ const NewPlace: React.FC = () => {
       <Input
         element="input"
         type="text"
-        label="Title"
+        label="Address"
         errorText="Enter a valid address"
         validators={[VALIDATOR_REQUIRE()]}
         id="address"

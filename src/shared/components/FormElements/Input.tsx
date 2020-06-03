@@ -15,6 +15,8 @@ interface Props {
   rows?: number;
   errorText?: string;
   validators: CustomValidator[];
+  initialValue?: string;
+  initialValidity?: boolean;
   onInput: (id: string, val: string, valid: boolean) => void;
 }
 
@@ -66,10 +68,12 @@ const Input: React.FC<Props> = ({
   errorText,
   placeholder,
   rows,
+  initialValue,
+  initialValidity,
 }: Props) => {
   const [inputState, dispatch] = useReducer(inputReducer, {
-    value: '',
-    isValid: false,
+    value: initialValue || '',
+    isValid: initialValidity || false,
     isTouched: false,
   });
 
