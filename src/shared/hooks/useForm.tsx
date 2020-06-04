@@ -10,12 +10,12 @@ interface InputStatus {
 }
 
 interface InputsState {
-  [key: string]: InputStatus;
+  [key: string]: InputStatus | undefined;
 }
 
 interface FormState {
   inputs: {
-    [key: string]: InputStatus;
+    [key: string]: InputStatus | undefined;
   };
   isValid: boolean;
 }
@@ -43,7 +43,9 @@ const formReducer = (state: FormState, action: FormActions): FormState => {
         if (inputId === action.inputId) {
           formIsValid = formIsValid && action.isValid;
         } else {
-          formIsValid = formIsValid && state.inputs[inputId].isValid;
+          formIsValid =
+            formIsValid &&
+            typeof state.inputs[inputId]?.isValid !== 'undefined';
         }
       });
 

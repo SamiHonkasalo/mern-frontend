@@ -12,15 +12,31 @@ interface Props {
 
 const PlaceItem: React.FC<Props> = ({ place }: Props) => {
   const [showMap, setShowMap] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const handleOpenMap = () => setShowMap(true);
   const handleCloseMap = () => setShowMap(false);
+  const handleOpenConfirmation = () => setShowConfirmation(true);
+  const handleCloseConfirmation = () => setShowConfirmation(false);
+
+  const handleDelete = () => {
+    setShowConfirmation(false);
+    console.log('asd');
+  };
 
   const closeButton = <Button onClick={handleCloseMap}>CLOSE</Button>;
-  const modalContent = (
+
+  const mapModalContent = (
     <div className="map-container">
       <Map center={place.location} zoom={16} />
     </div>
+  );
+
+  const confirmModalContent = (
+    <p>
+      Do you want to proceed and delete this place? This action cannot be
+      undone.
+    </p>
   );
 
   return (
@@ -33,7 +49,26 @@ const PlaceItem: React.FC<Props> = ({ place }: Props) => {
           contentClass: 'place-item__modal-content',
           footerClass: 'place-item__modal-actions',
           footer: closeButton,
-          children: modalContent,
+          children: mapModalContent,
+        }}
+      />
+      <Modal
+        onCancel={handleCloseConfirmation}
+        show={showConfirmation}
+        overlayProps={{
+          header: 'Are you sure?',
+          footerClass: 'place-item__modal-actions',
+          footer: (
+            <>
+              <Button inverse onClick={handleCloseConfirmation}>
+                CANCEL
+              </Button>
+              <Button danger onClick={handleDelete}>
+                DELETE
+              </Button>
+            </>
+          ),
+          children: confirmModalContent,
         }}
       />
       <li className="place-item">
@@ -51,7 +86,9 @@ const PlaceItem: React.FC<Props> = ({ place }: Props) => {
               VIEW ON MAP
             </Button>
             <Button to={`/places/${place.id}`}>EDIT</Button>
-            <Button danger>DELETE</Button>
+            <Button danger onClick={handleOpenConfirmation}>
+              DELETE
+            </Button>
           </div>
         </Card>
       </li>

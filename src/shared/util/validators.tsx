@@ -32,11 +32,11 @@ export const VALIDATOR_REQUIRE = (): ReturnString => ({
 export const VALIDATOR_FILE = (): ReturnString => ({
   type: VALIDATOR_TYPE_FILE,
 });
-export const VALIDATOR_MINLENGTH = (val: 5): ReturnStringNum => ({
+export const VALIDATOR_MINLENGTH = (val: number): ReturnStringNum => ({
   type: VALIDATOR_TYPE_MINLENGTH,
   val,
 });
-export const VALIDATOR_MAXLENGTH = (val: 5): ReturnStringNum => ({
+export const VALIDATOR_MAXLENGTH = (val: number): ReturnStringNum => ({
   type: VALIDATOR_TYPE_MAXLENGTH,
   val,
 });
