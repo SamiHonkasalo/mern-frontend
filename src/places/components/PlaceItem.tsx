@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import Card from '../../shared/components/UIElements/Card';
 import './PlaceItem.css';
 import Button from '../../shared/components/FormElements/Button';
 import Modal from '../../shared/components/UIElements/Modal';
 import Map from '../../shared/components/UIElements/Map';
+import AuthContext from '../../shared/context/auth-context';
 
 interface Props {
   place: Place;
 }
 
 const PlaceItem: React.FC<Props> = ({ place }: Props) => {
+  const auth = useContext(AuthContext);
   const [showMap, setShowMap] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
 
@@ -85,10 +87,14 @@ const PlaceItem: React.FC<Props> = ({ place }: Props) => {
             <Button inverse onClick={handleOpenMap}>
               VIEW ON MAP
             </Button>
-            <Button to={`/places/${place.id}`}>EDIT</Button>
-            <Button danger onClick={handleOpenConfirmation}>
-              DELETE
-            </Button>
+            {auth.isLoggedIn && (
+              <>
+                <Button to={`/places/${place.id}`}>EDIT</Button>
+                <Button danger onClick={handleOpenConfirmation}>
+                  DELETE
+                </Button>
+              </>
+            )}
           </div>
         </Card>
       </li>

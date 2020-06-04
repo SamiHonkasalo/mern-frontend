@@ -27,11 +27,17 @@ const NavLinks: React.FC = () => {
           </NavLink>
         </li>
       )}
-      {!auth.isLoggedIn && (
+      {!auth.isLoggedIn ? (
         <li>
           <NavLink to="/auth" exact>
             AUTHENTICATE
           </NavLink>
+        </li>
+      ) : (
+        <li>
+          <button type="button" onClick={auth.logout}>
+            LOGOUT
+          </button>
         </li>
       )}
     </ul>
