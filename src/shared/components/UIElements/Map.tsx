@@ -1,11 +1,12 @@
 import React, { useRef, useEffect } from 'react';
+import mapboxgl from 'mapbox-gl';
 
 import './Map.css';
 
 interface Props {
   className?: string;
   style?: React.CSSProperties;
-  center: google.maps.LatLng | google.maps.LatLngLiteral | undefined;
+  center: mapboxgl.LngLatLike;
   zoom: number;
 }
 
@@ -13,13 +14,16 @@ const Map: React.FC<Props> = ({ className, style, center, zoom }: Props) => {
   const mapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    mapboxgl.accessToken = process.env.REACT_APP_MAP_API_KEY || '';
     if (mapRef && mapRef.current) {
-      const map = new window.google.maps.Map(mapRef.current, {
+      const map = new mapboxgl.Map({
+        container: mapRef.current,
+        style: 'mapbox://styles/mapbox/streets-v11',
         center,
         zoom,
       });
       // eslint-disable-next-line no-new
-      new window.google.maps.Marker({ position: center, map });
+      new mapboxgl.Marker().setLngLat(center).addTo(map);
     }
   }, [center, zoom]);
 
