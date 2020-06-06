@@ -13,12 +13,12 @@ import useForm from '../../shared/hooks/useForm';
 import AuthContext from '../../shared/context/auth-context';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
+import useHttpClient from '../../shared/hooks/http-hook';
 
 const Auth: React.FC = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<Error>();
   const auth = useContext(AuthContext);
+  const { error, loading, sendRequest, clearError } = useHttpClient();
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -37,31 +37,38 @@ const Auth: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (isLoginMode) {
-    } else {
-      setLoading(true);
       try {
-        const res = await fetch('http://localhost:3001/api/users/signup', {
+        await sendRequest({
+          url: 'http://localhost:3001/api/users/login',
           method: 'POST',
+          body: JSON.stringify({
+            email: formState.inputs.email?.value,
+            password: formState.inputs.password?.value,
+          }),
           headers: {
             'Content-Type': 'application/json',
           },
+        });
+        auth.login();
+        // eslint-disable-next-line no-empty
+      } catch (e) {}
+    } else {
+      try {
+        await sendRequest({
+          url: 'http://localhost:3001/api/users/signup',
+          method: 'POST',
           body: JSON.stringify({
             name: formState.inputs.name?.value,
             email: formState.inputs.email?.value,
             password: formState.inputs.password?.value,
           }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
         });
-        const data = await res.json();
-        if (!res.ok) {
-          throw new Error(data.message || 'Error signing up');
-        }
-        console.log(data);
-        setLoading(false);
         auth.login();
-      } catch (e) {
-        setLoading(false);
-        setError(e.message || 'Error signing up');
-      }
+        // eslint-disable-next-line no-empty
+      } catch (e) {}
     }
   };
 
@@ -92,13 +99,9 @@ const Auth: React.FC = () => {
     setIsLoginMode((prevMode) => !prevMode);
   };
 
-  const handleErrorClear = () => {
-    setError(undefined);
-  };
-
   return (
     <>
-      <ErrorModal error={error} onClear={handleErrorClear} />
+      <ErrorModal error={error} onClear={clearError} />
       <Card className="authentication">
         {loading && <LoadingSpinner asOverlay />}
         <h2>Login required</h2>
