@@ -26,7 +26,7 @@ export default function useHttpClient(): UseHttpClient {
       url,
       method = 'GET',
       body = null,
-      headers = {},
+      headers = { 'Content-Type': 'application/json' },
     }: RequestParams) => {
       setLoading(true);
       const httpAbortCtrl = new AbortController();

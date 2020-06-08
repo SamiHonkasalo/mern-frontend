@@ -38,7 +38,7 @@ const Auth: React.FC = () => {
     event.preventDefault();
     if (isLoginMode) {
       try {
-        await sendRequest({
+        const data = await sendRequest({
           url: 'http://localhost:3001/api/users/login',
           method: 'POST',
           body: JSON.stringify({
@@ -49,12 +49,12 @@ const Auth: React.FC = () => {
             'Content-Type': 'application/json',
           },
         });
-        auth.login();
+        auth.login(data?.user?.id);
         // eslint-disable-next-line no-empty
       } catch (e) {}
     } else {
       try {
-        await sendRequest({
+        const data = await sendRequest({
           url: 'http://localhost:3001/api/users/signup',
           method: 'POST',
           body: JSON.stringify({
@@ -66,7 +66,7 @@ const Auth: React.FC = () => {
             'Content-Type': 'application/json',
           },
         });
-        auth.login();
+        auth.login(data?.user?.id);
         // eslint-disable-next-line no-empty
       } catch (e) {}
     }
