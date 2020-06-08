@@ -59,17 +59,17 @@ const Auth: React.FC = () => {
       } catch (e) {}
     } else {
       try {
+        const formData = new FormData();
+        formData.append('email', formState.inputs.email?.value || '');
+        formData.append('name', formState.inputs.name?.value || '');
+        formData.append('password', formState.inputs.password?.value || '');
+        formData.append('image', formState.inputs.image?.value || '');
+
         const data = await sendRequest({
           url: 'http://localhost:3001/api/users/signup',
           method: 'POST',
-          body: JSON.stringify({
-            name: formState.inputs.name?.value,
-            email: formState.inputs.email?.value,
-            password: formState.inputs.password?.value,
-          }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          body: formData,
+          headers: {},
         });
         auth.login(data?.user?.id);
         // eslint-disable-next-line no-empty

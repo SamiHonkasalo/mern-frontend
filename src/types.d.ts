@@ -11,6 +11,6 @@ interface Place {
   title: string;
   description: string;
   address: string;
-  creatorId: string;
+  creator: string;
   location: { lat: number; lng: number };
 }

@@ -52,7 +52,6 @@ const PlaceItem: React.FC<Props> = ({ place, deleteCb }: Props) => {
       undone.
     </p>
   );
-
   return (
     <>
       <ErrorModal error={error} onClear={clearError} />
@@ -90,7 +89,10 @@ const PlaceItem: React.FC<Props> = ({ place, deleteCb }: Props) => {
         <Card className="place-item__content">
           {loading && <LoadingSpinner asOverlay />}
           <div className="place-item__image">
-            <img src={place.image} alt={place.title} />
+            <img
+              src={`http://localhost:3001/${place.image}`}
+              alt={place.title}
+            />
           </div>
           <div className="place-item__info">
             <h2>{place.title}</h2>
@@ -101,7 +103,7 @@ const PlaceItem: React.FC<Props> = ({ place, deleteCb }: Props) => {
             <Button inverse onClick={handleOpenMap}>
               VIEW ON MAP
             </Button>
-            {auth.userId === place.creatorId && (
+            {auth.userId === place.creator && (
               <>
                 <Button to={`/places/${place.id}`}>EDIT</Button>
                 <Button danger onClick={handleOpenConfirmation}>
