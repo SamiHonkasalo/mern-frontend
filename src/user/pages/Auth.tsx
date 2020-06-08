@@ -14,6 +14,7 @@ import AuthContext from '../../shared/context/auth-context';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 import useHttpClient from '../../shared/hooks/http-hook';
+import ImageUpload from '../../shared/components/FormElements/ImageUpload';
 
 const Auth: React.FC = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -28,6 +29,10 @@ const Auth: React.FC = () => {
       },
       password: {
         value: '',
+        isValid: false,
+      },
+      image: {
+        value: null,
         isValid: false,
       },
     },
@@ -78,6 +83,7 @@ const Auth: React.FC = () => {
         {
           ...formState.inputs,
           name: undefined,
+          image: undefined,
         },
         typeof formState.inputs.email !== 'undefined' &&
           typeof formState.inputs.password !== 'undefined' &&
@@ -116,6 +122,14 @@ const Auth: React.FC = () => {
               validators={[VALIDATOR_REQUIRE()]}
               errorText="Please enter a name"
               onInput={inputHandler}
+            />
+          )}
+          {!isLoginMode && (
+            <ImageUpload
+              errorText="Invalid image"
+              onInput={inputHandler}
+              center
+              id="image"
             />
           )}
           <Input

@@ -22,11 +22,16 @@ const UserPlaces: React.FC = () => {
           url: `http://localhost:3001/api/places/user/${userId}`,
         });
         setUserPlaces(data?.places);
+        // eslint-disable-next-line no-empty
       } catch (e) {}
     };
 
     fetchUserPlaces();
   }, [sendRequest, userId]);
+
+  const handlePlaceDelete = (delId: string) => {
+    setUserPlaces((prevPlaces) => prevPlaces.filter((p) => p.id !== delId));
+  };
 
   return (
     <>
@@ -36,7 +41,9 @@ const UserPlaces: React.FC = () => {
           <LoadingSpinner />
         </div>
       )}
-      {!loading && userPlaces.length > 0 && <PlaceList places={userPlaces} />}
+      {!loading && userPlaces && (
+        <PlaceList places={userPlaces} deleteCb={handlePlaceDelete} />
+      )}
     </>
   );
 };

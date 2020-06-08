@@ -5,7 +5,7 @@ const INPUT_CHANGE = 'INPUT_CHANGE';
 const SET_DATA = 'SET_DATA';
 
 interface InputStatus {
-  value: string;
+  value: string | File | null;
   isValid: boolean;
 }
 
@@ -24,7 +24,7 @@ interface ChangeAction {
   type: typeof INPUT_CHANGE;
   isValid: boolean;
   inputId: string;
-  value: string;
+  value: string | File | null;
 }
 
 interface SetAction {
@@ -76,7 +76,7 @@ const useForm = (
   initialFormValidity: boolean
 ): [
   FormState,
-  (id: string, value: string, isValid: boolean) => void,
+  (id: string, value: string | File | null, isValid: boolean) => void,
   (inputData: InputsState, formValidity: boolean) => void
 ] => {
   const initialState = {
@@ -86,7 +86,7 @@ const useForm = (
   const [formState, dispatch] = useReducer(formReducer, initialState);
 
   const handleInputChange = useCallback(
-    (id: string, value: string, isValid: boolean) => {
+    (id: string, value: string | File | null, isValid: boolean) => {
       dispatch({ type: INPUT_CHANGE, isValid, inputId: id, value });
     },
     []

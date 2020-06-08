@@ -6,24 +6,36 @@ import Button from '../../shared/components/FormElements/Button';
 import Modal from '../../shared/components/UIElements/Modal';
 import Map from '../../shared/components/UIElements/Map';
 import AuthContext from '../../shared/context/auth-context';
+import useHttpClient from '../../shared/hooks/http-hook';
+import ErrorModal from '../../shared/components/UIElements/ErrorModal';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 
 interface Props {
   place: Place;
+  deleteCb: (id: string) => void;
 }
 
-const PlaceItem: React.FC<Props> = ({ place }: Props) => {
+const PlaceItem: React.FC<Props> = ({ place, deleteCb }: Props) => {
   const auth = useContext(AuthContext);
   const [showMap, setShowMap] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const { error, loading, sendRequest, clearError } = useHttpClient();
 
   const handleOpenMap = () => setShowMap(true);
   const handleCloseMap = () => setShowMap(false);
   const handleOpenConfirmation = () => setShowConfirmation(true);
   const handleCloseConfirmation = () => setShowConfirmation(false);
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     setShowConfirmation(false);
-    console.log('asd');
+    try {
+      await sendRequest({
+        url: `http://localhost:3001/api/places/${place.id}`,
+        method: 'DELETE',
+      });
+      deleteCb(place.id);
+      // eslint-disable-next-line no-empty
+    } catch (e) {}
   };
 
   const closeButton = <Button onClick={handleCloseMap}>CLOSE</Button>;
@@ -43,6 +55,7 @@ const PlaceItem: React.FC<Props> = ({ place }: Props) => {
 
   return (
     <>
+      <ErrorModal error={error} onClear={clearError} />
       <Modal
         show={showMap}
         onCancel={handleCloseMap}
@@ -75,6 +88,7 @@ const PlaceItem: React.FC<Props> = ({ place }: Props) => {
       />
       <li className="place-item">
         <Card className="place-item__content">
+          {loading && <LoadingSpinner asOverlay />}
           <div className="place-item__image">
             <img src={place.image} alt={place.title} />
           </div>
@@ -87,7 +101,7 @@ const PlaceItem: React.FC<Props> = ({ place }: Props) => {
             <Button inverse onClick={handleOpenMap}>
               VIEW ON MAP
             </Button>
-            {auth.isLoggedIn && (
+            {auth.userId === place.creatorId && (
               <>
                 <Button to={`/places/${place.id}`}>EDIT</Button>
                 <Button danger onClick={handleOpenConfirmation}>

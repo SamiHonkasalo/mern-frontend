@@ -8,9 +8,10 @@ import './PlaceList.css';
 
 interface Props {
   places: Place[];
+  deleteCb: (id: string) => void;
 }
 
-const PlaceList: React.FC<Props> = ({ places }: Props) => {
+const PlaceList: React.FC<Props> = ({ places, deleteCb }: Props) => {
   if (places.length === 0) {
     return (
       <div className="place-list center">
@@ -25,7 +26,7 @@ const PlaceList: React.FC<Props> = ({ places }: Props) => {
   return (
     <ul className="place-list">
       {places.map((p) => (
-        <PlaceItem key={p.id} place={p} />
+        <PlaceItem key={p.id} place={p} deleteCb={deleteCb} />
       ))}
     </ul>
   );
