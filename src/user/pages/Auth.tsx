@@ -54,7 +54,7 @@ const Auth: React.FC = () => {
             'Content-Type': 'application/json',
           },
         });
-        auth.login(data?.user?.id);
+        auth.login(data?.userId);
         // eslint-disable-next-line no-empty
       } catch (e) {}
     } else {
@@ -71,7 +71,7 @@ const Auth: React.FC = () => {
           body: formData,
           headers: {},
         });
-        auth.login(data?.user?.id);
+        auth.login(data?.userId);
         // eslint-disable-next-line no-empty
       } catch (e) {}
     }
