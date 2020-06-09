@@ -47,14 +47,13 @@ const NewPlace: React.FC = () => {
       const formData = new FormData();
       formData.append('title', formState.inputs.title?.value || '');
       formData.append('description', formState.inputs.description?.value || '');
-      formData.append('creator', auth.userId);
       formData.append('address', formState.inputs.address?.value || '');
       formData.append('image', formState.inputs.image?.value || '');
       await sendRequest({
         url: 'http://localhost:3001/api/places',
         method: 'POST',
         body: formData,
-        headers: {},
+        headers: { Authorization: `Bearer ${auth.token}` },
       });
       // Redirect after succesfull send
       history.push('/');

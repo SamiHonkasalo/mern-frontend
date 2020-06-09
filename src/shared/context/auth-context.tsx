@@ -2,10 +2,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { createContext } from 'react';
 
-const AuthContext = createContext({
+interface Context {
+  isLoggedIn: boolean;
+  userId: string;
+  token: string | null;
+  login: (id: string, token: string) => void;
+  logout: () => void;
+}
+
+const AuthContext = createContext<Context>({
   isLoggedIn: false,
   userId: '',
-  login: (id: string) => {},
+  token: null,
+  login: (id: string, token: string) => {},
   logout: () => {},
 });
 

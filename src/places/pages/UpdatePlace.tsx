@@ -73,6 +73,10 @@ const UpdatePlace: React.FC = () => {
           title: formState.inputs.title?.value,
           description: formState.inputs.description?.value,
         }),
+        headers: {
+          Authorization: `Bearer ${auth.token}`,
+          'Content-Type': 'application/json',
+        },
       });
       // Redirect after succesfull send
       history.push(`/${auth.userId}/places`);

@@ -32,6 +32,7 @@ const PlaceItem: React.FC<Props> = ({ place, deleteCb }: Props) => {
       await sendRequest({
         url: `http://localhost:3001/api/places/${place.id}`,
         method: 'DELETE',
+        headers: { Authorization: `Bearer ${auth.token}` },
       });
       deleteCb(place.id);
       // eslint-disable-next-line no-empty
