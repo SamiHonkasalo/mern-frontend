@@ -30,7 +30,7 @@ const PlaceItem: React.FC<Props> = ({ place, deleteCb }: Props) => {
     setShowConfirmation(false);
     try {
       await sendRequest({
-        url: `http://localhost:3001/api/places/${place.id}`,
+        url: `${process.env.REACT_APP_API_URL}places/${place.id}`,
         method: 'DELETE',
         headers: { Authorization: `Bearer ${auth.token}` },
       });
@@ -91,7 +91,7 @@ const PlaceItem: React.FC<Props> = ({ place, deleteCb }: Props) => {
           {loading && <LoadingSpinner asOverlay />}
           <div className="place-item__image">
             <img
-              src={`http://localhost:3001/${place.image}`}
+              src={`${process.env.REACT_APP_ASSET_URL}${place.image}`}
               alt={place.title}
             />
           </div>

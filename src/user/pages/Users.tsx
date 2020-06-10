@@ -6,12 +6,12 @@ import useHttpClient from '../../shared/hooks/http-hook';
 
 const Users: React.FC = () => {
   const { error, loading, sendRequest, clearError } = useHttpClient();
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<User[] | null>(null);
   useEffect(() => {
     async function getUsers() {
       try {
         const res = await sendRequest({
-          url: 'http://localhost:3001/api/users',
+          url: `${process.env.REACT_APP_API_URL}users`,
         });
         setUsers(res.users);
         // eslint-disable-next-line no-empty
@@ -28,7 +28,7 @@ const Users: React.FC = () => {
           <LoadingSpinner />
         </div>
       )}
-      {!loading && users.length > 0 && <UsersList users={users} />}
+      {!loading && users && <UsersList users={users} />}
     </>
   );
 };

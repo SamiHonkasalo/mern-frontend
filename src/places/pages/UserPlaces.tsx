@@ -11,7 +11,7 @@ interface ParamTypes {
 }
 
 const UserPlaces: React.FC = () => {
-  const [userPlaces, setUserPlaces] = useState<Place[]>([]);
+  const [userPlaces, setUserPlaces] = useState<Place[] | null>(null);
   const { userId } = useParams<ParamTypes>();
   const { error, loading, sendRequest, clearError } = useHttpClient();
 
@@ -19,7 +19,7 @@ const UserPlaces: React.FC = () => {
     const fetchUserPlaces = async () => {
       try {
         const data = await sendRequest({
-          url: `http://localhost:3001/api/places/user/${userId}`,
+          url: `${process.env.REACT_APP_API_URL}places/user/${userId}`,
         });
         setUserPlaces(data?.places);
         // eslint-disable-next-line no-empty
@@ -30,7 +30,9 @@ const UserPlaces: React.FC = () => {
   }, [sendRequest, userId]);
 
   const handlePlaceDelete = (delId: string) => {
-    setUserPlaces((prevPlaces) => prevPlaces.filter((p) => p.id !== delId));
+    setUserPlaces(
+      (prevPlaces) => prevPlaces && prevPlaces.filter((p) => p.id !== delId)
+    );
   };
 
   return (

@@ -41,7 +41,7 @@ const UpdatePlace: React.FC = () => {
     const getPlace = async () => {
       try {
         const data = await sendRequest({
-          url: `http://localhost:3001/api/places/${placeId}`,
+          url: `${process.env.REACT_APP_API_URL}places/${placeId}`,
         });
         setSelectedPlace(data?.place);
         setFormData(
@@ -67,7 +67,7 @@ const UpdatePlace: React.FC = () => {
     event.preventDefault();
     try {
       await sendRequest({
-        url: `http://localhost:3001/api/places/${placeId}`,
+        url: `${process.env.REACT_APP_API_URL}places/${placeId}`,
         method: 'PATCH',
         body: JSON.stringify({
           title: formState.inputs.title?.value,
