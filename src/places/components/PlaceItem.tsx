@@ -90,10 +90,7 @@ const PlaceItem: React.FC<Props> = ({ place, deleteCb }: Props) => {
         <Card className="place-item__content">
           {loading && <LoadingSpinner asOverlay />}
           <div className="place-item__image">
-            <img
-              src={`${process.env.REACT_APP_ASSET_URL}${place.image}`}
-              alt={place.title}
-            />
+            <img src={place.image} alt={place.title} />
           </div>
           <div className="place-item__info">
             <h2>{place.title}</h2>
